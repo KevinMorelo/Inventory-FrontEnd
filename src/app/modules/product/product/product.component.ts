@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import { ConfirmComponent } from '../../shared/components/confirm/confirm.component';
 import { ProductService } from '../../shared/services/product.service';
 import { NewProductComponent } from '../new-product/new-product.component';
 
@@ -43,7 +44,7 @@ export class ProductComponent implements OnInit {
       let listCProduct = resp.product.products;
 
       listCProduct.forEach((element: ProductElement) => {
-        element.category = element.category.name;
+        // element.category = element.category.name;
         element.picture = 'data:image/jpeg;base64,' + element.picture;
         dateProduct.push(element);
       });
@@ -74,6 +75,40 @@ export class ProductComponent implements OnInit {
     return this.snackBar.open(messsage, action, {
       duration: 2000
     })
+  }
+
+  edit(id: number, name: string, price: number, account: number, category: any){
+    const dialogRef = this.dialog.open(NewProductComponent, {
+      width: '450px',
+      data: {id: id, name: name, price: price, account:account, category:category}
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result == 1) {
+        this.openSnackBar("Producto editado", "Exito");
+        this.getProducts();
+      } else if (result == 2) {
+        this.openSnackBar("Se produjo un error al aditar el producto", "Error")
+
+      }
+    });
+  }
+
+  delete(id:any){
+    const dialogRef = this.dialog.open(ConfirmComponent, {
+      width: '450px',
+      data: {id: id, module: "product"}
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result == 1) {
+        this.openSnackBar("Producto eliminado", "Exito");
+        this.getProducts();
+      } else if (result == 2) {
+        this.openSnackBar("Se produjo un error al eliminar el producto", "Error")
+
+      }
+    });
   }
 
 }
