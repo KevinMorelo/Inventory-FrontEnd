@@ -111,6 +111,17 @@ export class ProductComponent implements OnInit {
     });
   }
 
+  find(name:any){
+    if(name.length === 0){
+      return this.getProducts();
+    }
+
+    this.productService.getProductByName(name)
+    .subscribe((resp:any)=>{
+      this.processProductResponse(resp);
+    })
+  } 
+
 }
 export interface ProductElement {
   id: number;
