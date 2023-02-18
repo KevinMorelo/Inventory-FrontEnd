@@ -19,8 +19,13 @@
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-
-
+                    <div>
+                        <mat-label>Imagen: </mat-label>
+                        <label for="file-upload" class="subir">Subir Archivo
+                        </label>
+                        <input id="file-upload" accept="image/png, image/jpeg" (change)="onFileChanged($event)" type="file" formControlName="picture" class="input-file"/>
+                        <span>{{nameImg}}</span>
+                    </div>
                 </div>
             </form>
         </mat-dialog-content>
