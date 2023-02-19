@@ -39,17 +39,17 @@ export class ProductComponent implements OnInit {
   }
 
   processProductResponse(resp: any) {
-    const dateProduct: ProductElement[] = [];
+    const dataProduct: ProductElement[] = [];
     if (resp.metadata[0].code == "00") {
       let listCProduct = resp.product.products;
 
       listCProduct.forEach((element: ProductElement) => {
         // element.category = element.category.name;
         element.picture = 'data:image/jpeg;base64,' + element.picture;
-        dateProduct.push(element);
+        dataProduct.push(element);
       });
       //Set datasource
-      this.dataSource = new MatTableDataSource<ProductElement>(dateProduct);
+      this.dataSource = new MatTableDataSource<ProductElement>(dataProduct);
       this.dataSource.paginator = this.paginator;
 
     }
